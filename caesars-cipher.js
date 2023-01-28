@@ -1,23 +1,34 @@
 function rot13(str) {
-  var arr = str.split("");
-
-  for(var i=0; i<arr.length; i++)
+  let arr = [];
+  for(let i=0; i<str.length; i++)
   {
-    if(/\W+/.test(arr[i]))
+    let val = str.charCodeAt(i);
+    if(val == 32 || val == 46 || val == 63 || val == 33)
     {
+      arr.push(str.charAt(i));
       continue;
-    } 
-    if(arr[i].charCodeAt() <= 77)
-    {
-      arr[i] = String.fromCharCode((arr[i].charCodeAt(0)) + 13)
     }
-    else
-    {
-      arr[i] = String.fromCharCode((arr[i].charCodeAt(0)) - 13)
-    }
+    arr.push(str.charCodeAt(i));
   }
-  console.log(arr.join(""))
-  return arr.join("");
+
+  arr.forEach((item,index,arr) => 
+  {
+    if(/\W/.test(item))
+    {
+      return;
+    }
+    else if((item - 13) < 65)
+    {
+      let temp = 12 - (item - 65);
+      item = 90 - temp;
+      arr[index] = String.fromCharCode(item)
+      return;
+    }
+       arr[index] = String.fromCharCode(item - 13);
+  });
+
+  let astr = arr.join("");
+  return astr;
 }
 
-rot13("GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT.");
+rot13("SERR CVMMN!");
